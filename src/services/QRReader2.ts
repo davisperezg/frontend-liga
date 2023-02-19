@@ -1,5 +1,6 @@
 import jsQR from "jsqr";
 
+//https://libreriasjs.com/libreria-javascript-crear-y-leer-qrs-qrcode-y-jsqr/
 export class QRReader2 {
   isCamReady: boolean;
   isCamOpen: boolean;
@@ -70,7 +71,12 @@ export class QRReader2 {
       const code = jsQR(imageData.data, imageData.width, imageData.height, {
         inversionAttempts: "dontInvert",
       });
+
+      //Si scanea con exito
       if (code) {
+        //Emitiremos un sonido
+        const audio = new Audio("src/utils/sonidos/sonido_ingresa.mp3");
+        audio.play();
         this.drawLine(
           code.location.topLeftCorner,
           code.location.topRightCorner,
@@ -91,16 +97,38 @@ export class QRReader2 {
           code.location.topLeftCorner,
           "#FF3B58"
         );
+
+        //Muestra data en el dom
         this.qrDataContainer.innerHTML = code.data;
-        this.qrDataContainer.classList.add("has-background-success");
+
+        //Cerramos cam
+        this.closeCam();
       }
     }
     this.rafID = requestAnimationFrame(this.tick.bind(this));
   }
 
+  async closeCam() {
+    if (this.rafID) {
+      cancelAnimationFrame(this.rafID);
+    }
+    this.video.pause();
+    this.stream.getTracks().forEach((track: any) => {
+      track.stop();
+    });
+    this.isCamOpen = false;
+    this.camCanvasCtx.clearRect(
+      0,
+      0,
+      this.camCanvas.width,
+      this.camCanvas.height
+    );
+    this.camCanvas.classList.add("d-none");
+    this.qrDataContainer.classList.remove("has-background-success");
+  }
+
   async toggleCamera() {
     if (this.isCamOpen) {
-      console.log("x1");
       if (this.rafID) {
         cancelAnimationFrame(this.rafID);
       }
@@ -120,7 +148,6 @@ export class QRReader2 {
       this.qrDataContainer.classList.remove("has-background-success");
       return;
     }
-    console.log("x2");
     this.isCamOpen = true;
     this.camCanvas.classList.remove("d-none");
     this.stream = await navigator.mediaDevices.getUserMedia({
