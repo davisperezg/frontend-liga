@@ -100,6 +100,7 @@ export class QRReader2 {
 
   async toggleCamera() {
     if (this.isCamOpen) {
+      console.log("x1");
       if (this.rafID) {
         cancelAnimationFrame(this.rafID);
       }
@@ -119,6 +120,7 @@ export class QRReader2 {
       this.qrDataContainer.classList.remove("has-background-success");
       return;
     }
+    console.log("x2");
     this.isCamOpen = true;
     this.camCanvas.classList.remove("d-none");
     this.stream = await navigator.mediaDevices.getUserMedia({

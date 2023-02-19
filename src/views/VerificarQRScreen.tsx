@@ -4,39 +4,36 @@ import { useEffect } from "react";
 import { QRReader2 } from "../services/QRReader2";
 
 const VerificarQRScreen = () => {
+  const [device, setDevice] = useState({
+    state: true,
+    message: "",
+  });
   const [scanResultWebCam, setScanResultWebCam] = useState("");
-  const cameraBtn: any = document.querySelector("#btn-cam");
-  const qrDataContainer = document.querySelector("#qr-data");
-  const camCanvas = document.querySelector("#cam-canvas");
-  //const qrReader;
+  const ref1 = useRef<HTMLDivElement>(null);
+  const ref2 = useRef<HTMLButtonElement>(null);
+  const ref3 = useRef<HTMLCanvasElement>(null);
+
+  // navigator.userAgent.match(/Android/i) ||
+  //   navigator.userAgent.match(/webOS/i) ||
+  //   navigator.userAgent.match(/iPhone/i) ||
+  //   navigator.userAgent.match(/iPad/i) ||
+  //   navigator.userAgent.match(/iPod/i) ||
+  //   navigator.userAgent.match(/BlackBerry/i) ||
+  //   navigator.userAgent.match(/Windows Phone/i);
 
   const onClickss = useCallback(() => {
-    if (cameraBtn) {
-      const qrReader = new QRReader2(camCanvas, qrDataContainer);
+    if (ref2.current) {
+      const qrReader = new QRReader2(ref3.current, ref1.current);
       console.log(qrReader);
       qrReader.toggleCamera();
       if (qrReader.getIsCamOpen()) {
-        cameraBtn.innerHTML == "Parar cámara";
+        ref2.current.innerHTML = "Parar cámara";
         return;
       }
-      cameraBtn.innerHTML == "Iniciar cámara";
+
+      ref2.current.innerText = "Iniciar cámara";
     }
-  }, [cameraBtn]);
-
-  // useEffect(() => {
-  //   if (cameraBtn) {
-  //     console.log(qrReader)
-  //   }
-  // }, []);
-
-  // const btnClick = () => {
-  //   qrReader.toggleCamera();
-  //   if (qrReader.getIsCamOpen()) {
-  //     cameraBtn.innerHTML == "Parar cámara";
-  //     return;
-  //   }
-  //   cameraBtn.innerHTML == "Iniciar cámara";
-  // };
+  }, []);
 
   return (
     <div
@@ -54,30 +51,35 @@ const VerificarQRScreen = () => {
         Usaremos la camara de tu celular. Por favor dar permitir a la ventana
         que aparece
       </span>
-      <div
-        style={{
-          width: "50%",
-          margin: "0 auto",
-          display: "flex",
-          justifyContent: "center",
-          height: 150,
-          marginTop: 50,
-        }}
-      >
-        <Button
-          onClick={onClickss}
-          id="btn-cam"
-          style={{
-            fontSize: 60,
-            width: "100%",
-          }}
-          type="button"
-        >
-          VERIFICAR
-        </Button>
-      </div>
-      <div id="qr-data"></div>
-      <canvas id="cam-canvas"></canvas>
+      {device.state === false || (
+        <>
+          {" "}
+          <div
+            style={{
+              width: "50%",
+              margin: "0 auto",
+              display: "flex",
+              justifyContent: "center",
+              height: 150,
+              marginTop: 50,
+            }}
+          >
+            <Button
+              ref={ref2}
+              onClick={onClickss}
+              style={{
+                fontSize: 60,
+                width: "100%",
+              }}
+              type="button"
+            >
+              VERIFICAR
+            </Button>
+          </div>
+          <div ref={ref1}></div>
+          <canvas id="cam-canvas" className="d-none" ref={ref3}></canvas>
+        </>
+      )}
     </div>
   );
 };

@@ -251,10 +251,17 @@
 }
 
 #cam-canvas {
-  width: 100%;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  pointer-events: none;
+  display: block;
+  /* width: 100%;
   height: auto;
   display: block;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 20px auto; */
 }
 
 .d-none {
