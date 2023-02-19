@@ -11,14 +11,8 @@ const VerificarQRScreen = () => {
   const ref1 = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLButtonElement>(null);
   const ref3 = useRef<HTMLCanvasElement>(null);
-  const audio = new Audio("/sonido_ingresa.mp3");
-  //    navigator.userAgent.match(/Android/i) ||
-  //    navigator.userAgent.match(/webOS/i) ||
-  //    navigator.userAgent.match(/iPhone/i) ||
-  //    navigator.userAgent.match(/iPad/i) ||
-  //    navigator.userAgent.match(/iPod/i) ||
-  //    navigator.userAgent.match(/BlackBerry/i) ||
-  //    navigator.userAgent.match(/Windows Phone/i);
+  const audioExito = new Audio("/sonido_ingresa.mp3");
+  const audioError = new Audio("/sonido_denegado.mp3");
 
   const onClickss = useCallback(() => {
     if (ref2.current) {
@@ -59,10 +53,11 @@ const VerificarQRScreen = () => {
         if (newContent.innerHTML) {
           const auxContent = newContent.innerHTML;
           newContent.innerHTML = "";
-          audio.play();
+
           //data.play();
           //Si no es un ObjectId mando error
           if (!isValid(auxContent)) {
+            audioError.play();
             return alert("NO ES UN QR VALIDO. INTENTA DENUEVO");
           }
 
@@ -73,14 +68,17 @@ const VerificarQRScreen = () => {
 
               //Si no encuentra ticket en la db manda error
               if (!encontrado) {
+                audioError.play();
                 return alert(ticket.message);
               }
 
               //EXITOS
+              audioExito.play();
               alert(checking);
               window.location.reload();
             }
           } catch (e: any) {
+            audioError.play();
             const err = e.response.data.message;
             alert(err);
           }
