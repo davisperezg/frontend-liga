@@ -1,0 +1,15 @@
+.usuarios {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.usuarios__header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.usuarios__content {
+  width: 100%;
+}

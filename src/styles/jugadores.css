@@ -1,0 +1,49 @@
+.pases {
+  width: 100%;
+}
+
+.pases__header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.table--center {
+  text-align: center;
+}
+
+.table--30 {
+  width: 30px;
+}
+
+.table--180 {
+  width: 180px;
+}
+
+/* FORM 
+  bg        background-color: #242526;
+  inputs    background-color: #3a3b3c;
+
+*/
+
+.modal-content {
+  background-color: #242526;
+}
+
+.form-control {
+  background-color: #3a3b3c;
+  color: #fff;
+}
+
+.form-select {
+  /* color: #fff; */
+}
+
+.form-select::before {
+  color: #fff;
+}
+
+.form-control:focus {
+  background-color: #3a3b3c;
+  color: #fff;
+}

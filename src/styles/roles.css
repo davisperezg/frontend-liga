@@ -1,0 +1,23 @@
+.roles {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.roles__header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.roles__content {
+  width: 100%;
+}
+
+.check__content {
+  display: flex;
+}
+
+.check__option {
+  width: 50%;
+}

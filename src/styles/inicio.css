@@ -1,0 +1,11 @@
+.principal {
+  width: 100%;
+}
+
+.principal__item {
+  width: 50%;
+}
+
+.principal__bienvenida {
+  margin-bottom: 30px;
+}

@@ -1,0 +1,15 @@
+.permisos {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.permisos__header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.permisos__content {
+  width: 100%;
+}

@@ -1,0 +1,9 @@
+.precios {
+  width: 100%;
+}
+
+.precios__header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}

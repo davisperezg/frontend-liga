@@ -1,0 +1,25 @@
+.modulos {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.modulos__header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 30px;
+}
+
+.modulos__content {
+  width: 100%;
+}
+
+.modal__check {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="checkbox"] {
+  border: none;
+  margin-right: 5px;
+}

@@ -1,0 +1,262 @@
+.ticket {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 1.7fr;
+  gap: 20px;
+}
+
+.ticket__list {
+  /* width: 60%; */
+  /* background-color: #242526; */
+  color: #fff;
+}
+
+.ticket__th30center-list {
+  width: 30px;
+  text-align: center;
+}
+
+.ticket__th80center-list {
+  width: 80px;
+  text-align: center;
+}
+
+.ticket__center-list {
+  text-align: center;
+}
+
+/* FORM */
+
+.ticket__form {
+  /* width: 40%; */
+  background-color: #242526;
+  border-radius: 50px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ticket__section {
+  flex: 1 1 100%;
+}
+
+.ticket__item {
+  margin-bottom: 20px;
+}
+
+.ticket__text {
+  margin-bottom: 5px;
+}
+
+.ticket__select {
+  width: 100%;
+  background-color: #3a3b3c;
+  padding: 20px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+}
+
+.ticket__input {
+  width: 100%;
+  background-color: #3a3b3c;
+  padding: 20px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+}
+
+.ticket__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.ticket__text--modifier {
+  width: 100%;
+}
+
+.ticket__griditem {
+  width: 50px;
+  height: 50px;
+  background-color: #3a3b3c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+.ticket__text--modifier {
+  margin-bottom: 10px;
+}
+
+.ticket__btn {
+  width: 100%;
+}
+
+/* PRINT */
+@media print {
+  .print {
+    padding: 5px;
+    color: #000;
+    font-family: sans-serif;
+  }
+  .ticketPrint {
+    width: 302px;
+    max-width: 302px;
+    font-size: 10px;
+  }
+  .ticket__img {
+    max-width: inherit;
+    width: inherit;
+  }
+
+  .ticket__centrado {
+    text-align: center;
+    align-content: center;
+    margin-top: 1rem;
+  }
+
+  .ticket__centrado_noMargin {
+    text-align: center;
+    align-content: center;
+  }
+
+  .ticket__centrado_Table {
+    display: flex;
+    justify-content: center;
+    text-align: start;
+    margin-top: 1rem;
+  }
+
+  .ticket__caja {
+    width: 302px;
+    max-width: 302px;
+    margin-bottom: 1rem;
+  }
+
+  .ticket__titulo_pago {
+    margin-left: 40px;
+    width: 75px;
+    max-width: 75px;
+    float: left;
+  }
+
+  .ticket__numeros {
+    margin-left: 40px;
+    width: 40px;
+    max-width: 40px;
+    float: left;
+  }
+
+  .cantidad {
+    width: 40px;
+    max-width: 40px;
+    word-break: break-all;
+  }
+
+  .producto {
+    width: 140px;
+    max-width: 140px;
+  }
+
+  .descuento {
+    width: 40px;
+    max-width: 40px;
+    word-break: break-all;
+    text-align: end;
+  }
+
+  .pu {
+    width: 30px;
+    max-width: 30px;
+    word-break: break-all;
+    text-align: start;
+  }
+
+  .total {
+    width: 20px;
+    max-width: 20px;
+    word-break: break-all;
+    text-align: end;
+  }
+
+  table tr td {
+    border: none;
+  }
+
+  table thead {
+    border-top: 1px dotted black;
+    border-bottom: 1px dotted black;
+    border-collapse: collapse;
+  }
+
+  .ticket__borderTR {
+    border-top: 1px dotted black;
+    border-bottom: 1px dotted black;
+    border-collapse: collapse;
+  }
+
+  .ticket__tr {
+    border: hidden;
+  }
+
+  .ticket__soles {
+    text-align: end;
+  }
+
+  .iconAndSoles {
+    display: flex;
+  }
+
+  .iconAndSoles__soles {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .canceled {
+    position: absolute;
+    color: red;
+    opacity: 0.15;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    transform: rotate(-45deg);
+  }
+
+  .qr {
+    height: auto;
+    margin: 0 auto;
+    max-width: 100px;
+    width: 100%;
+    margin-top: 50px;
+  }
+
+  .id__qr {
+    margin: 0 auto;
+    max-width: 125px;
+    width: 100%;
+  }
+}
+
+.video-cam {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+#cam-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+.d-none {
+  display: none;
+}
