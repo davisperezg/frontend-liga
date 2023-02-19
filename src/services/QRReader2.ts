@@ -10,6 +10,7 @@ export class QRReader2 {
   qrDataContainer: any;
   camCanvasCtx: any;
   video: any;
+  audioExito: any;
 
   constructor(canvasVideoElement: any, qrDataContainerElement: any) {
     this.isCamReady = false;
@@ -25,6 +26,12 @@ export class QRReader2 {
     this.video.classList.add("video-cam");
     this.video.setAttribute("playsinline", true);
     document.body.appendChild(this.video);
+    this.audioExito = new Audio("src/utils/sonidos/sonido_ingresa.mp3");
+  }
+
+  sonidoMoneda() {
+    // Hacer algo aquí
+    this.audioExito.play();
   }
 
   getIsCamOpen(): boolean {
@@ -75,8 +82,7 @@ export class QRReader2 {
       //Si scanea con exito
       if (code) {
         //Emitiremos un sonido
-        const audio = new Audio("src/utils/sonidos/sonido_ingresa.mp3");
-        audio.play();
+        this.sonidoMoneda();
         this.drawLine(
           code.location.topLeftCorner,
           code.location.topRightCorner,
