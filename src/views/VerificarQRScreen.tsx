@@ -3,7 +3,6 @@ import { useState, useRef, useCallback } from "react";
 import { useEffect } from "react";
 import { QRReader2 } from "../services/QRReader2";
 import { getChecking } from "../api/ticket";
-import { isValid } from "bson-objectid";
 
 const VerificarQRScreen = () => {
   const [device, setDevice] = useState("");
@@ -47,9 +46,10 @@ const VerificarQRScreen = () => {
         if (newContent.innerHTML) {
           const auxContent = newContent.innerHTML;
           newContent.innerHTML = "";
+          const objectIdRegex = /^[0-9a-fA-F]{24}$/;
 
           //Si no es un ObjectId mando error
-          if (!isValid(auxContent)) {
+          if (!objectIdRegex.test(auxContent)) {
             audioError.play();
             return alert("NO ES UN QR VALIDO. INTENTA DENUEVO");
           }
