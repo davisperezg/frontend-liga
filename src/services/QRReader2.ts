@@ -10,7 +10,7 @@ export class QRReader2 {
   qrDataContainer: any;
   camCanvasCtx: any;
   video: any;
-  audioExito: any;
+  //audioExito: any;
 
   constructor(canvasVideoElement: any, qrDataContainerElement: any) {
     this.isCamReady = false;
@@ -26,12 +26,12 @@ export class QRReader2 {
     this.video.classList.add("video-cam");
     this.video.setAttribute("playsinline", true);
     document.body.appendChild(this.video);
-    this.audioExito = new Audio("src/utils/sonidos/sonido_ingresa.mp3");
+    //this.audioExito = new Audio("src/utils/sonidos/sonido_ingresa.mp3");
   }
 
   sonidoMoneda() {
     // Hacer algo aquí
-    this.audioExito.play();
+    //this.audioExito.play();
   }
 
   getIsCamOpen(): boolean {
@@ -55,8 +55,6 @@ export class QRReader2 {
       if (!this.isCamReady) {
         const camSize = this.video.getBoundingClientRect();
         if (camSize.width && camSize.height) {
-          //camSize.width;
-          //camSize.height;
           this.camCanvas.width = camSize.width;
           this.camCanvas.height = camSize.height;
           this.isCamReady = true;
@@ -82,7 +80,7 @@ export class QRReader2 {
       //Si scanea con exito
       if (code) {
         //Emitiremos un sonido
-        this.sonidoMoneda();
+        //this.sonidoMoneda();
         this.drawLine(
           code.location.topLeftCorner,
           code.location.topRightCorner,
@@ -131,6 +129,18 @@ export class QRReader2 {
     );
     this.camCanvas.classList.add("d-none");
     this.qrDataContainer.classList.remove("has-background-success");
+  }
+
+  async abrirCamara() {
+    this.isCamOpen = true;
+    this.camCanvas.classList.remove("d-none");
+    this.stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" },
+    });
+    this.video.srcObject = this.stream;
+    this.video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+    this.video.play();
+    requestAnimationFrame(this.tick.bind(this));
   }
 
   async toggleCamera() {

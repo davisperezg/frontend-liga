@@ -11,6 +11,13 @@ export const getTicket = async (id: string) => {
   return data;
 };
 
+export const getChecking = async (id: string) => {
+  const { data } = await axios.get<any>(
+    `${BASE_API}/api/v1/tickets/checking/${id}`
+  );
+  return data;
+};
+
 export const allTickets = async () => {
   const { data } = await axios.get<any>(`${BASE_API}/api/v1/tickets`);
   return data;

@@ -2,6 +2,8 @@ import Button from "react-bootstrap/Button";
 import { useState, useRef, useCallback } from "react";
 import { useEffect } from "react";
 import { QRReader2 } from "../services/QRReader2";
+import { getChecking } from "../api/ticket";
+import isValid from "bson-objectid";
 
 const VerificarQRScreen = () => {
   const [device, setDevice] = useState("");
@@ -9,7 +11,7 @@ const VerificarQRScreen = () => {
   const ref1 = useRef<HTMLDivElement>(null);
   const ref2 = useRef<HTMLButtonElement>(null);
   const ref3 = useRef<HTMLCanvasElement>(null);
-
+  const audio = new Audio("/sonido_ingresa.mp3");
   //    navigator.userAgent.match(/Android/i) ||
   //    navigator.userAgent.match(/webOS/i) ||
   //    navigator.userAgent.match(/iPhone/i) ||
@@ -21,13 +23,13 @@ const VerificarQRScreen = () => {
   const onClickss = useCallback(() => {
     if (ref2.current) {
       const qrReader = new QRReader2(ref3.current, ref1.current);
-      qrReader.toggleCamera();
-      if (qrReader.getIsCamOpen()) {
-        ref2.current.innerHTML = "Parar cámara";
-        return;
-      }
+      qrReader.abrirCamara();
+      //if (qrReader.getIsCamOpen()) {
+      //ref2.current.innerHTML = "Parar cámara";
+      //  return;
+      //}
 
-      ref2.current.innerText = "Iniciar cámara";
+      //ref2.current.innerText = "Iniciar cámara";
     }
   }, []);
 
@@ -48,6 +50,50 @@ const VerificarQRScreen = () => {
   useEffect(() => {
     window.addEventListener("resize", resizeDevice);
   }, []);
+
+  const leerRespuestaScan = useCallback(() => {
+    const interval = setInterval(async () => {
+      const newContent = ref1.current;
+      if (newContent) {
+        setScanResultWebCam(newContent.innerHTML);
+        if (newContent.innerHTML) {
+          const auxContent = newContent.innerHTML;
+          newContent.innerHTML = "";
+          audio.play();
+          //data.play();
+          //Si no es un ObjectId mando error
+          if (!isValid(auxContent)) {
+            return alert("NO ES UN QR VALIDO. INTENTA DENUEVO");
+          }
+
+          try {
+            const ticket = await getChecking(auxContent);
+            if (ticket) {
+              const { encontrado, checking } = ticket;
+
+              //Si no encuentra ticket en la db manda error
+              if (!encontrado) {
+                return alert(ticket.message);
+              }
+
+              //EXITOS
+              alert(checking);
+              window.location.reload();
+            }
+          } catch (e: any) {
+            const err = e.response.data.message;
+            alert(err);
+          }
+        }
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    leerRespuestaScan();
+  }, [leerRespuestaScan]);
 
   return (
     <div
@@ -90,7 +136,7 @@ const VerificarQRScreen = () => {
               VERIFICAR
             </Button>
           </div>
-          <div ref={ref1}></div>
+          <div id="resultado" ref={ref1}></div>
           <canvas id="cam-canvas" className="d-none" ref={ref3}></canvas>
         </>
       ) : (
