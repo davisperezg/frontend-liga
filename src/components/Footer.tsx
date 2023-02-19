@@ -21,7 +21,7 @@ const Footer = () => {
       >
         © 2023 by Kemay Technology. Todos los derechos reservados. Si tuviese
         algún inconveniente por favor contactarnos al siguiente correo:
-        davisperezg@gmail.com Version: 0.1.1 | Powered by @davisperezg
+        davisperezg@gmail.com Version: 0.1.2 | Powered by @davisperezg
       </div>
     </footer>
   );

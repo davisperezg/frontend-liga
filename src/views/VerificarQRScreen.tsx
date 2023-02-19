@@ -3,7 +3,7 @@ import { useState, useRef, useCallback } from "react";
 import { useEffect } from "react";
 import { QRReader2 } from "../services/QRReader2";
 import { getChecking } from "../api/ticket";
-import isValid from "bson-objectid";
+import { isValid } from "bson-objectid";
 
 const VerificarQRScreen = () => {
   const [device, setDevice] = useState("");
@@ -37,13 +37,7 @@ const VerificarQRScreen = () => {
           : "Estas ingresando desde un dispositivo Desktop. No puedes scanear QR"
       );
     }
-
-    window.removeEventListener("resize", resizeDevice);
   };
-
-  useEffect(() => {
-    window.addEventListener("resize", resizeDevice);
-  }, []);
 
   const leerRespuestaScan = useCallback(() => {
     const interval = setInterval(async () => {
@@ -54,7 +48,6 @@ const VerificarQRScreen = () => {
           const auxContent = newContent.innerHTML;
           newContent.innerHTML = "";
 
-          //data.play();
           //Si no es un ObjectId mando error
           if (!isValid(auxContent)) {
             audioError.play();
@@ -91,6 +84,18 @@ const VerificarQRScreen = () => {
 
   useEffect(() => {
     leerRespuestaScan();
+
+    if (screen.width > 1024) {
+      setDevice(
+        "Estas ingresando desde un dispositivo Desktop. No puedes scanear QR"
+      );
+    }
+
+    window.addEventListener("resize", (e: Event | UIEvent) => {
+      resizeDevice(e);
+
+      return window.removeEventListener("resize", resizeDevice);
+    });
   }, [leerRespuestaScan]);
 
   return (
